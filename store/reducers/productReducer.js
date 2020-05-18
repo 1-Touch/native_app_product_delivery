@@ -1,14 +1,14 @@
 const initialState = {
   products: [],
   likedProducts: [],
-  recentlyViewd: [],
+  recentlyViewed: [],
   cartProducts: [],
   cartProductsQuantity: [],
   cartTotal: 0,
 };
 
 const productReducer = (state = initialState, action) => {
-  let product, products;
+  let product, products, list;
   switch (action.type) {
     case 'PRODUCTS_BY_SUBCATEGORY':
       console.log('product by cat reducer');
@@ -79,6 +79,23 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: [],
+      };
+    case 'RECENTLY_VIEWED':
+      product = action.payload;
+      const isPresent = state.recentlyViewed.find(
+        (item) => item.id === product.id
+      );
+      if (isPresent) {
+        products = state.recentlyViewed.filter(
+          (item) => item.id !== product.id
+        );
+        list = [product, ...products];
+      } else {
+        list = [product, ...state.recentlyViewed];
+      }
+      return {
+        ...state,
+        recentlyViewed: list,
       };
     default:
       return state;

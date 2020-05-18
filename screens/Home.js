@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, StatusBar } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Components
 import CategoryCarousel from '../components/CategoryCarousel';
@@ -10,12 +10,25 @@ import Carousel from '../components/Carousel/Carousel';
 // Theme
 import { context } from '../Theme/colorSwatch';
 
+// Actions
+import { getAllCategories } from '../store/actions/categoryActions';
+
 // Data
-import { recentlyViewedProducts, likedProducts, offers } from '../data';
+import { recentlyViewedProducts, offers, topDeals } from '../data';
 
 export default function Home({ navigation }) {
-  // Selector
+  // Selectors
   const { categories } = useSelector((state) => state.category);
+  const { likedProducts, recentlyViewed } = useSelector(
+    (state) => state.product
+  );
+
+  // Dispatch
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, []);
 
   return (
     <ScrollView>
@@ -42,32 +55,54 @@ export default function Home({ navigation }) {
         </View>
 
         {/* Recently Viewed */}
-        <View style={{ paddingHorizontal: 10 }}>
-          <Text style={styles.title}>Recently Viewed</Text>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            style={styles.scrollListContainer}
-          >
-            {recentlyViewedProducts.map((product) => (
-              <ProductCarousel
-                key={product.id}
-                product={product}
-                navigation={navigation}
-              />
-            ))}
-          </ScrollView>
-        </View>
+        {recentlyViewed.length > 0 && (
+          <View style={{ paddingHorizontal: 10 }}>
+            <Text style={styles.title}>Recently Viewed</Text>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              style={styles.scrollListContainer}
+            >
+              {recentlyViewed.map((product) => (
+                <ProductCarousel
+                  key={product.id}
+                  product={product}
+                  navigation={navigation}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        )}
 
         {/* Liked Products */}
+        {likedProducts.length > 0 && (
+          <View style={{ paddingHorizontal: 10 }}>
+            <Text style={styles.title}>Liked Products</Text>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              style={styles.scrollListContainer}
+            >
+              {likedProducts.map((product) => (
+                <ProductCarousel
+                  key={product.id}
+                  product={product}
+                  navigation={navigation}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        )}
+
+        {/* Top Deals */}
         <View style={{ paddingHorizontal: 10 }}>
-          <Text style={styles.title}>Liked Products</Text>
+          <Text style={styles.title}>Top Deals</Text>
           <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             style={styles.scrollListContainer}
           >
-            {likedProducts.map((product) => (
+            {topDeals.map((product) => (
               <ProductCarousel
                 key={product.id}
                 product={product}

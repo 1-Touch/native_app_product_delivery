@@ -18,16 +18,19 @@ import { context } from '../Theme/colorSwatch';
 import FlatButton from '../components/FlatButton';
 
 // Actions
-import { addToCart, removeFromCart } from '../store/actions/productActions';
+import {
+  addToCart,
+  removeFromCart,
+  recentlyViewed,
+} from '../store/actions/productActions';
 
 export default function ProductDetails(props) {
-  console.log('Product Details', props);
   const { id, name, image, price, discount } = props.route.params;
   const product = { id, name, image, price, discount };
 
   // Selector
   const { cartProducts } = useSelector((state) => state.product);
-  console.log('cartPros', cartProducts);
+
   // Dispatch
   const dispatch = useDispatch();
 
@@ -35,6 +38,7 @@ export default function ProductDetails(props) {
     props.navigation.setOptions({
       title: name,
     });
+    dispatch(recentlyViewed(product));
   }, []);
 
   const isInCart = (id) => {

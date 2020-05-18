@@ -169,32 +169,7 @@ export const categories = [
   },
 ];
 
-export const recentlyViewedProducts = [
-  { id: 1, name: 'Pink Top', image: product1, price: '200', discount: '20' },
-  {
-    id: 2,
-    name: 'Blue Skirt',
-    image: product2,
-    price: '400',
-    discount: '30',
-  },
-  {
-    id: 3,
-    name: 'Dry Fit T-shirt',
-    image: product3,
-    price: '1200',
-    discount: '50',
-  },
-  {
-    id: 4,
-    name: 'Skin Fit Denims Pack 3',
-    image: product4,
-    price: '800',
-    discount: '10',
-  },
-];
-
-export const likedProducts = [
+export const topDeals = [
   { id: 5, name: 'Summer Wear', image: liked1, price: '960', discount: '35' },
   {
     id: 6,
