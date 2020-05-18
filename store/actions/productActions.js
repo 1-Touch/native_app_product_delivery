@@ -65,3 +65,10 @@ export const clearProductList = () => {
     type: 'CLEAR_PRODUCT_LIST',
   };
 };
+
+export const recentlyViewed = (product) => {
+  return {
+    type: 'RECENTLY_VIEWED',
+    payload: product,
+  };
+};
